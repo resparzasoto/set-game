@@ -1,0 +1,28 @@
+{
+  "name": "set-game",
+  "version": "0.1.0",
+  "description": "The family game of visual perception",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "axios": "^0.21.1"
+  },
+  "scripts": {
+    "images": "node scripts/downloadImages.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/resparzasoto/set-game.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/resparzasoto/set-game/issues"
+  },
+  "homepage": "https://github.com/resparzasoto/set-game#readme"
+}

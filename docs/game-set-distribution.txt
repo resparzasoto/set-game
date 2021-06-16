@@ -1,0 +1,138 @@
+1-27 solidos
+
+1-9 sequezies-solidos
+
+1-3 rojo
+4-6 purura
+7-9 verde
+
+1-18 rombos-solidos
+
+10-12 rojo
+13-15 purpura
+16-18 verde
+
+19-27 redondeado-solidos
+
+19-21 rojo
+22-24 purpura
+25-27 verde
+
+------------------------------------
+
+28-54 dashes
+
+28-36 seuqzies-dashes
+
+28-30 rojo
+31-33 purpura
+34-36 verde
+
+37-45 rombos-dashes
+
+37-39 rojo
+40-42 purpura
+43-45 verde
+
+46-54 redondeado-dashes
+
+46-48 rojo
+49-51 purpura
+52-54 verde
+
+------------------------------------
+
+55-81 outlines
+
+55-63 seuqzies-outlines
+
+55-57 rojo
+58-60 purpura
+61-63 verde
+
+64-72 rombos-outlines
+
+64-66 rojo
+67-69 purpura
+70-72 verde
+
+73-81 redondeado-outlines
+
+73-75 rojo
+76-78 purpura
+79-81 verde
+
+------------------------------------
+
+- ¿Cómo podemos saber el número de las figuras de la carta? (feat number)
+1 + 3 = tipo de figura 1
+2 + 3 = tipo de figura 2
+3 + 3 = tipo de figura 3
+
+- ¿Cómo podemos saber que es un solido? (feat shape)
+Los solidos van desde el 1 al 27.
+
+- ¿Cómo podemos saber que es un dash? (feat shape)
+Los dash van desde el 28 al 54.
+
+- ¿Cómo podemos saber que es un outline? (feat shape)
+Los outline van desde el 55-81.
+
+* Cada 3 cartas cambiamos de color (color)
+* Cada 8 cartas cambiamos de figura (shape)
+* Cada 27 cartas cambiamos de shading (shading)
+
+
+
+- obteniendo numero
+
+para obtener el number de las figuras, es necesario realizar un number_image % 3, el sobrando indicará el numero de imagen, sí el sobrante es 0, el numero de la figura es 3
+
+- obteniendo color
+
+del 1-3 rojo
+del 4-6 purpura
+del 7-9 verde
+
+cada 9 cambia de color
+
+del 10-12 rojo
+del 13-15 purpura
+del 17-19 verde
+
+para obtener el color, es necesario realizar un number_image % 9, el sobrante indicara el color dependiendo en el conjunto que pertenezca
+
+del 1-3 rojo
+del 4-6 purpura
+del 7-9 verde
+
+si el sobrante es 0, es verde, porque estará en el conjunto del 7-9 (verde)
+
+- obteniendo shape
+
+del 1-9     sequezies
+del 10-18   rombos
+del 19-27   redondos
+
+64/9=7 sobra 1
+
+9  1 sequezies
+18 2 rombos
+27 3 redondos
+36 4 sequezies
+45 5 rombos
+54 6 redondos
+63 7 sequezies
+72 8 rombos
+81 9 redondos
+
+
+- obteniendo shading
+
+del 1-27    solidos
+del 28-54   dashes
+del 55-81   outline
+
+27 solidos
+54 dashes
+81 outline
