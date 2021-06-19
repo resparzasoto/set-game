@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "set-game",
   "version": "0.1.0",
   "description": "The family game of visual perception",
@@ -12,6 +13,7 @@
   },
   "scripts": {
     "images": "node scripts/downloadImages.js",
+    "game": "node js/modules/Game.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
