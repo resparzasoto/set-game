@@ -2,47 +2,61 @@
 
 import constants from "./constants.js";
 
-const { GAME, FEATURE } = constants;
+const { GAME, FEATURE, BOARD } = constants;
 
 class Game {
   constructor() {
-    this.cards = [];
+    this.gameCards = [];
+    this.responseSets = [];
     this.numbers = [1, 2, 3];
     this.colors = ["RED", "PURPLE", "GREEN"];
     this.shapes = ["SQUIGGLES", "DIAMONDS", "OVALS"];
     this.shades = ["SOLID", "STRIPED", "OUTLINED"];
   }
 
-  createCardGame = () => {
+  createGameCard = () => {
     const card = {};
 
-    card.id = this.getNewCardId();
-    card.number = this.getCardNumberByCardId(card.id);
-    card.color = this.getCardColorByCardId(card.id);
-    card.shape = this.getCardShapeByCardId(card.id);
-    card.shading = this.getCardShadingByCardId(card.id);
-    card.image = this.getCardImageByCardId(card.id);
+    card.id = this.getNewValidId();
+    card.number = this.getCardNumberById(card.id);
+    card.color = this.getCardColorById(card.id);
+    card.shape = this.getCardShapeById(card.id);
+    card.shading = this.getCardShadingById(card.id);
+    card.image = this.getCardImageById(card.id);
 
-    this.cards.push(card);
+    this.gameCards.push(card);
 
     return card;
   };
 
-  getNewCardId = () => {
-    let newCardId;
+  createCardById = (id) => {
+    const card = {};
 
-    do {
-      newCardId = this.getRandomCardId();
-    } while (!this.isValidCardId(newCardId));
+    card.id = id;
+    card.number = this.getCardNumberById(id);
+    card.color = this.getCardColorById(id);
+    card.shape = this.getCardShapeById(id);
+    card.shading = this.getCardShadingById(id);
+    card.image = this.getCardImageById(id);
 
-    return newCardId;
+    return card;
   };
 
-  getCardNumberByCardId = (cardId) => {
+  getNewValidId = () => {
+    let newId;
+
+    do {
+      newId = this.getRandomId();
+    } while (!this.isValidId(newId));
+
+    return newId;
+  };
+
+  getCardNumberById = (id) => {
     let featureIndex = 0;
 
-    for (let i = 1; i <= cardId; i++) {
-      if (i === cardId) {
+    for (let i = 1; i <= id; i++) {
+      if (i === id) {
         break;
       }
 
@@ -56,11 +70,11 @@ class Game {
     return this.numbers[featureIndex];
   };
 
-  getCardColorByCardId = (cardId) => {
+  getCardColorById = (id) => {
     let featureIndex = 0;
 
-    for (let i = 1; i <= cardId; i++) {
-      if (i === cardId) {
+    for (let i = 1; i <= id; i++) {
+      if (i === id) {
         break;
       }
 
@@ -76,11 +90,11 @@ class Game {
     return this.colors[featureIndex];
   };
 
-  getCardShapeByCardId = (cardId) => {
+  getCardShapeById = (id) => {
     let featureIndex = 0;
 
-    for (let i = 1; i <= cardId; i++) {
-      if (i === cardId) {
+    for (let i = 1; i <= id; i++) {
+      if (i === id) {
         break;
       }
 
@@ -96,11 +110,11 @@ class Game {
     return this.shapes[featureIndex];
   };
 
-  getCardShadingByCardId = (cardId) => {
+  getCardShadingById = (id) => {
     let featureIndex = 0;
 
-    for (let i = 1; i <= cardId; i++) {
-      if (i === cardId) {
+    for (let i = 1; i <= id; i++) {
+      if (i === id) {
         break;
       }
 
@@ -116,17 +130,14 @@ class Game {
     return this.shades[featureIndex];
   };
 
-  getCardImageByCardId = (cardId) => {
-    return `../assets/${cardId}.png`;
-  };
+  getCardImageById = (id) => `./assets/${id}.png`;
 
-  getRandomCardId = () =>
-    Math.floor(Math.random() * (GAME.MAX_CARD_ID - GAME.MIN_CARD_ID)) +
-    GAME.MIN_CARD_ID;
+  getRandomId = () =>
+    Math.floor(Math.random() * (GAME.MAX_ID - GAME.MIN_ID)) + GAME.MIN_ID;
 
-  isValidCardId = (cardId) => {
-    if (this.cards.length > 0) {
-      const exists = this.findCardGameByCardId(cardId);
+  isValidId = (id) => {
+    if (this.gameCards.length > 0) {
+      const exists = this.findGameCardById(id);
 
       if (exists) {
         return false;
@@ -138,56 +149,78 @@ class Game {
 
   isMultiple = (value, multiple) => value % multiple === 0;
 
-  isSet = (cardsId) => {
-    const allFeatures = [];
-    const arrayNumbers = [];
-    const arrayColors = [];
-    const arrayShapes = [];
-    const arrayShadings = [];
-    const arrayCards = this.findCardsGameByCardId(cardsId);
+  isSet = (set) => {
+    const features = {
+      numbers: [],
+      colors: [],
+      shapes: [],
+      shadings: [],
+    };
 
-    arrayCards.forEach((card) => {
-      arrayNumbers.push(card["number"]);
-      arrayColors.push(card["color"]);
-      arrayShapes.push(card["shape"]);
-      arrayShadings.push(card["shading"]);
+    set.forEach((card) => {
+      features.numbers.push(card["number"]);
+      features.colors.push(card["color"]);
+      features.shapes.push(card["shape"]);
+      features.shadings.push(card["shading"]);
     });
 
-    allFeatures.push(arrayNumbers.every(this.allEqual));
-    allFeatures.push(arrayColors.every(this.allEqual));
-    allFeatures.push(arrayShapes.every(this.allEqual));
-    allFeatures.push(arrayShadings.every(this.allEqual));
-
-    if (
-      this.allDifferentFeatures(allFeatures) ||
-      this.haveOnlyOneDifferentFeature(allFeatures)
-    ) {
-      return true;
+    for (const feat in features) {
+      if (!this.quickCheck(features[feat])) {
+        return false;
+      }
     }
 
-    return false;
+    return true;
   };
 
-  findCardGameByCardId = (cardId) =>
-    this.cards.find((card) => card.id === cardId);
+  quickCheck = (array) =>
+    this.areTheSameOnEachCard(array) || this.areDifferentOnEachCard(array);
 
-  findCardsGameByCardId = (cardsId) => {
-    const arrayCards = [];
+  isAlreadySetFound = (set) => {
+    let alreadyFound = false;
 
-    cardsId.forEach((cardId) => {
-      arrayCards.push(this.findCardGameByCardId(cardId));
+    this.responseSets.forEach((alreadyFoundSet) => {
+      let foundCards = 0;
+
+      alreadyFoundSet.forEach((alreadyFoundCard) => {
+        const exists = set.find((card) => card.id === alreadyFoundCard.id);
+
+        if (exists) {
+          foundCards++;
+        }
+      });
+
+      if (foundCards === BOARD.SET) {
+        alreadyFound = true;
+        return;
+      }
     });
 
-    return arrayCards;
+    return alreadyFound;
   };
 
-  allEqual = (e, index, array) => e === array[0];
+  isWon = () => this.responseSets.length === BOARD.RESPONSES_SET;
 
-  haveOnlyOneDifferentFeature = (array) =>
-    array.filter((value) => value === true).length === 1 ||
-    array.filter((value) => value === false).length === 1;
+  addResponseSet = (set) => {
+    this.responseSets.push(set);
+  };
 
-  allDifferentFeatures = (array) => array.every(this.allEqual);
+  allEqual = (array) => array.every((e, index, array) => e === array[0]);
+
+  allDifferent = (array) =>
+    array.every((e, index, array) => {
+      if (index > 0) {
+        return e !== array[0];
+      }
+
+      return true;
+    });
+
+  findGameCardById = (id) => this.gameCards.find((card) => card.id === id);
+
+  areTheSameOnEachCard = (array) => array.every((value) => value === array[0]);
+
+  areDifferentOnEachCard = (array) => new Set(array).size === BOARD.SET;
 }
 
 export default Game;

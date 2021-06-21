@@ -13,8 +13,7 @@
   },
   "scripts": {
     "images": "node scripts/downloadImages.js",
-    "game": "node js/modules/Game.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node scripts/testCases.js"
   },
   "repository": {
     "type": "git",

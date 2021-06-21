@@ -1,12 +1,14 @@
 const constants = {
   BOARD: {
-    ROWS: 3,
-    COLUMNS: 4,
+    ROWS: 6,
+    COLUMNS: 6,
+    SET: 3,
+    RESPONSES_SET: 6,
   },
   GAME: {
     CARDS: 12,
-    MIN_CARD_ID: 1,
-    MAX_CARD_ID: 81,
+    MIN_ID: 1,
+    MAX_ID: 81,
   },
   FEATURE: {
     CONDITIONS: {
